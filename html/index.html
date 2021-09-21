@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SearchMovie</title>
+    <link rel="stylesheet" href="../style//style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Navbar  -->
+    <header class="app__header">
+      <nav>
+        <ul class="app__nav">
+          <li class="app__search mobile">
+            <form id="form">
+              <input type="search" id="search" placeholder="Search..." />
+            </form>
+          </li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Movies</a></li>
+          <li><a href="#">Series</a></li>
+          <li><a href="#">Featured</a></li>
+        </ul>
+      </nav>
+      <h1 class="app__title">Search Movie</h1>
+    </header>
+    <!-- Hero__Section -->
+    <section id="hero__section">
+      <div class="hero__section">
+        <div class="hero__overlay"></div>
+
+        <p class="hero__info">Hot in this week</p>
+        <h1 class="hero__title">
+          Money Heist&nbsp;&nbsp;||<span class="hero__year">2021</span>
+        </h1>
+        <h4 class="hero__genres">Crime drama | Heist | Thriller</h4>
+        <p class="hero__desc">
+          A criminal mastermind who goes by "The Professor" has a plan to pull
+          off the biggest heist in recorded history -- to print billions of
+          euros in the Royal Mint of Spain. To help him carry out the ambitious
+          plan, he recruits eight people with certain abilities and who have
+          nothing to lose.
+        </p>
+        <div class="hero__ratings">
+          <div class="ratings">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="rating__count">
+            <p class="rating__linkes">4.5 <span>(3,444)</span></p>
+          </div>
+        </div>
+        <button
+          class="
+            MuiButtonBase-root
+            sMuiButton-root
+            MuiButton-contained
+            hero__button
+          "
+          tabindex="0"
+          type="button"
+        >
+          <i class="fas fa-play video__icon"></i>
+          <span class="MuiButton-label">Play Trailer</span
+          ><span class="MuiTouchRipple-root"></span>
+        </button>
+      </div>
+    </section>
+    <!-- Modal -->
+    <section id="modal" class="modal"></section>
+
+    <main id="main">
+      <section class="movie__lists">
+        <div class="trending__list">
+          <h4>Popular Movies</h4>
+          <div id="popular__list" class="list__items">
+            <div class="list__item">
+              <img
+                src="https://cdn.mos.cms.futurecdn.net/8NgbWjnZUq5zRV4orQfbJi.jpg"
+                alt="movie__list"
+                title="money-heist"
+              />
+              <div class="movie__info">
+                <h5 class="movie__title">
+                  Jurassic Hunt<span class="moview__year">(2021)</span>
+                </h5>
+                <p class="movie__overview" style="overflow: hidden">
+                  <span
+                    ><span
+                      >Female adventurer Parker joins a crew of male trophy
+                      hunters in…
+                    </span></span
+                  >
+                </p>
+                <div class="hero__ratings">
+                  <div class="ratings">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="rating__count">
+                    <p class="rating__linkes">4.5 <span>(3,444)</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="top__rated__list">
+          <h4>Top Rated</h4>
+          <div id="top__rated__list" class="list__items">
+            <!-- <div class="list__item">
+              <img
+                src="https://cdn.mos.cms.futurecdn.net/8NgbWjnZUq5zRV4orQfbJi.jpg"
+                alt="movie__list"
+                title="money-heist"
+              />
+              <div class="movie__info">
+                <h5 class="movie__title">
+                  Money Heist<span class="movie__year">(2021)</span>
+                </h5>
+                <p class="movie__overview" style="overflow: hidden">
+                  <span
+                    ><span
+                      >Female adventurer Parker joins a crew of male trophy
+                      hunters in…
+                    </span></span
+                  >
+                </p>
+                <div class="hero__ratings">
+                  <div class="ratings">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="rating__count">
+                    <p class="rating__linkes">4.5 <span>(3,444)</span></p>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
