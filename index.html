@@ -19,10 +19,18 @@
     <header class="app__header">
       <nav>
         <ul class="app__nav">
-          <li class="app__search mobile">
-            <form id="form">
-              <input type="search" id="search" placeholder="Search..." />
+          <li class="app__search">
+            <form id="form" class="searchInputWrapper">
+              <input class="searchInput" id="search" type="search"  placeholder="Search...">
+              <i class="searchInputIcon fa fa-search"></i>
+              </input>
             </form>
+            <!-- <form id="form">
+              <input type="search" id="search" placeholder="Search..." />
+              <a href="#" class = "search-btn">
+                <i class="fas fa-search"></i>
+              </a>
+            </form> -->
           </li>
           <li><a href="#">Home</a></li>
           <li><a href="#">Movies</a></li>
@@ -45,10 +53,16 @@
         <p class="hero__desc">
           A criminal mastermind who goes by "The Professor" has a plan to pull
           off the biggest heist in recorded history -- to print billions of
-          euros in the Royal Mint of Spain. To help him carry out the ambitious
-          plan, he recruits eight people with certain abilities and who have
-          nothing to lose.
+          <span class="dots">....</span>
+          &nbsp;
+          <span class="hidden__text">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi
+            tenetur accusamus laboriosam nobis architecto, cumque pariatur
+            molestiae voluptate quibusdam! Architecto totam nihil nesciunt
+            aliquam ipsam sed non magni odit reprehenderit?
+          </span>
         </p>
+        <span class="see__more"> See More</span>
         <div class="hero__ratings">
           <div class="ratings">
             <i class="fas fa-star"></i>

@@ -10,11 +10,21 @@ const top__list = document.getElementById("top__rated__list");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
 const main = document.getElementById("main");
-// const movie__item = document.getElementById("list__item");
-const hero__section = document.getElementById("hero__section");
+const see__more = document.querySelector(".see__more");
+const see__more__text = document.querySelector(".hero__desc");
+see__more.addEventListener("click", (e) => {
+  see__more__text.classList.toggle("see__more__text");
+  if (see__more.innerText === "See More") {
+    see__more.innerText = "See Less";
+  } else {
+    see__more.innerText = "See More";
+  }
+});
 
-// initially get fav movies
+// initially get popular  movies
 getMovies(API_URL);
+// initially get top rated  movies
+
 getTopMovies(TOP_RATED_API_URL);
 
 async function getMovies(url) {
@@ -153,6 +163,7 @@ function showMovies(movies) {
 //     return "red";
 //   }
 // }
+
 // search movie
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -188,15 +199,14 @@ function showSingleMovie(movie) {
 
   if (movie) {
     const {
-     
       genres,
-      poster_path,
+
       title,
       vote_average,
       overview,
       vote_count,
       release_date,
-      backdrop_path
+      backdrop_path,
     } = movie;
 
     html += `
@@ -213,8 +223,15 @@ function showSingleMovie(movie) {
       genres[1].name
     }</h4>
     <p class="hero__desc">
-    ${overview}
-    </p>
+    ${overview.slice(0, 200)}
+    <span class="dots">....</span>
+    &nbsp;
+    <span class="hidden__text">
+    ${overview.slice(201, overview.length)}
+    </span>
+  </p>
+  <span class="see__more"> See More</span>
+   
     <div class="hero__ratings">
       <div class="ratings">
         <i class="fas fa-star"></i>
@@ -234,7 +251,7 @@ function showSingleMovie(movie) {
         MuiButton-contained
         hero__button
       "
-      tabindex="0"
+      tab-index="0"
       type="button"
     >
       <i class="fas fa-play video__icon"></i>
@@ -248,6 +265,17 @@ function showSingleMovie(movie) {
     console.log("Error");
   }
 }
- 
+
 // smooth scroll after clicked on single movies
 const scrollTop = () => window["scrollTo"]({ top: 0, behavior: "smooth" });
+// read more
+// read__more__btn.addEventListener('click',readMore);
+// function readMore(event){
+
+//   for (let i = 0; i < 10; i++) {
+//     let btn = event.target;
+//     console.log(btn);
+
+//   }
+
+// }
