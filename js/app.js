@@ -7,11 +7,15 @@ const SEARCH_API = `https://api.themoviedb.org/3/search/movie?&api_key=${API_KEY
 
 const popular__list = document.getElementById("popular__list");
 const top__list = document.getElementById("top__rated__list");
+const search__list = document.getElementById("search__list");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
 const main = document.getElementById("main");
 const see__more = document.querySelector(".see__more");
 const see__more__text = document.querySelector(".hero__desc");
+const search__heading = document.querySelector(".search__list");
+
+// see more
 see__more.addEventListener("click", (e) => {
   see__more__text.classList.toggle("see__more__text");
   if (see__more.innerText === "See More") {
@@ -20,6 +24,13 @@ see__more.addEventListener("click", (e) => {
     see__more.innerText = "See More";
   }
 });
+// navbar
+const ham = document.querySelector(".header .nav-bar .ham");
+const nav = document.querySelector(".header .nav-bar nav");
+ham.addEventListener("click", () => {
+  nav.classList.toggle("nav-toggle");
+  ham.classList.toggle("close");
+});
 
 // initially get popular  movies
 getMovies(API_URL);
@@ -27,13 +38,8 @@ getMovies(API_URL);
 
 getTopMovies(TOP_RATED_API_URL);
 
-async function getMovies(url) {
-  const resp = await fetch(url);
-  const respData = await resp.json();
-  showMovies(respData.results);
+getSearchResults(SEARCH_API);
 
-  console.log(respData);
-}
 async function getTopMovies(url) {
   const resp = await fetch(url);
   const respData = await resp.json();
@@ -48,8 +54,6 @@ function showTopRatedMovies(movies) {
     movies.forEach((movie) => {
       const { id, poster_path, title, vote_average, overview, vote_count } =
         movie;
-
-      console.log(id);
 
       let truncOverview = "";
       if (overview.length > 50) {
@@ -93,9 +97,15 @@ function showTopRatedMovies(movies) {
     });
 
     popular__list.innerHTML = html;
+    search__list.innerHTML = "";
   } else {
     console.log("Error");
   }
+}
+async function getMovies(url) {
+  const resp = await fetch(url);
+  const respData = await resp.json();
+  showMovies(respData.results);
 }
 function showMovies(movies) {
   let html = "";
@@ -104,8 +114,6 @@ function showMovies(movies) {
     movies.forEach((movie) => {
       const { id, poster_path, title, vote_average, overview, vote_count } =
         movie;
-
-      console.log(id);
 
       let truncOverview = "";
       if (overview.length > 50) {
@@ -153,7 +161,76 @@ function showMovies(movies) {
     console.log("Error");
   }
 }
+async function getSearchResults(url) {
+ try {
+  const resp = await fetch(url);
+  const respData = await resp.json();
+  showSearchMovies(respData.results);
+ } catch (error) {
+   console.log("Search movie not called yet",error.message);
+ }
+}
+ 
+function showSearchMovies(movies) {
+  let html = "";
+ 
+  if (movies) {
+    
+    movies.forEach((movie) => {
+      const { id, poster_path, title, vote_average, overview, vote_count } =
+        movie;
 
+      let truncOverview = "";
+      if (overview.length > 50) {
+        truncOverview = `${overview.slice(0, 50)}...`;
+      }
+
+      html += `
+     
+               <div class="list__item" data-id ="${id}">
+               <img
+               src="${IMG_PATH + poster_path}"
+                  alt="${title}"
+                  title="${title}"
+                  
+                />
+                <div class="movie__info">
+                  <h5 class="movie__title">
+                    ${title}<span class="movie__year">(2021)</span>
+                  </h5>
+                  <p class="movie__overview" style="overflow: hidden">
+                    <span
+                      ><span
+                        >${truncOverview}
+                      </span></span
+                    >
+                  </p>
+                  <div class="hero__ratings">
+                    <div class="ratings">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <div class="rating__count">
+                      <p class="rating__likes">${vote_average} <span>(${vote_count})</span></p>
+                    </div>
+                  </div>
+                </div>
+               </div>
+                `;
+    });
+   
+    search__list.innerHTML = html;
+ 
+     
+    
+  } else {
+    console.log("Error");
+  }
+
+}
 // function getClassByRate(vote) {
 //   if (vote >= 8) {
 //     return "green";
@@ -171,7 +248,7 @@ form.addEventListener("submit", (e) => {
   const searchTerm = search.value;
 
   if (searchTerm && searchTerm !== "") {
-    getMovies(SEARCH_API + searchTerm);
+    getSearchResults(SEARCH_API + searchTerm);
 
     search.value = "";
   } else {
@@ -268,6 +345,7 @@ function showSingleMovie(movie) {
 
 // smooth scroll after clicked on single movies
 const scrollTop = () => window["scrollTo"]({ top: 0, behavior: "smooth" });
+
 // read more
 // read__more__btn.addEventListener('click',readMore);
 // function readMore(event){
