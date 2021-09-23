@@ -15,6 +15,19 @@ const see__more = document.querySelector(".see__more");
 const see__more__text = document.querySelector(".hero__desc");
 const search__heading = document.querySelector(".search__list");
 
+// loading spinner
+const preloader = document.querySelector(".preloader");
+function ladingSpinner(show) {
+  if (show) {
+    setTimeout(() => {
+      preloader.style.display = "none";
+    }, 2000);
+  } else {
+    preloader.style.display = "flex";
+  }
+}
+ladingSpinner(true);
+
 // see more
 see__more.addEventListener("click", (e) => {
   see__more__text.classList.toggle("see__more__text");
@@ -41,10 +54,17 @@ getTopMovies(TOP_RATED_API_URL);
 getSearchResults(SEARCH_API);
 
 async function getTopMovies(url) {
-  const resp = await fetch(url);
-  const respData = await resp.json();
-  showTopRatedMovies(respData.results);
-  console.log(respData);
+  try {
+    const resp = await fetch(url);
+ 
+    const respData = await resp.json();
+    ladingSpinner(true);
+    showTopRatedMovies(respData.results);
+    ladingSpinner(false);
+  } catch (error) {
+   console.log("Error ",err.message);
+  }
+ 
 }
 
 function showTopRatedMovies(movies) {
@@ -103,9 +123,18 @@ function showTopRatedMovies(movies) {
   }
 }
 async function getMovies(url) {
-  const resp = await fetch(url);
-  const respData = await resp.json();
-  showMovies(respData.results);
+  try{
+    const resp = await fetch(url);
+    const respData = await resp.json();
+    ladingSpinner(true);
+    showMovies(respData.results);
+    ladingSpinner(false);
+  }
+ 
+  catch (error) {
+    console.log("Error ",err.message);
+    }
+ 
 }
 function showMovies(movies) {
   let html = "";
@@ -162,24 +191,26 @@ function showMovies(movies) {
   }
 }
 async function getSearchResults(url) {
- try {
-  const resp = await fetch(url);
-  const respData = await resp.json();
-  showSearchMovies(respData.results);
- } catch (error) {
-   console.log("Search movie not called yet",error.message);
- }
+  try {
+    const resp = await fetch(url);
+    const respData = await resp.json();
+    ladingSpinner(true);
+    showSearchMovies(respData.results);
+    ladingSpinner(false);
+  } catch (error) {
+   
+     
+    alert("Search movie not called yet", error.message);
+     
+  }
 }
- 
+
 function showSearchMovies(movies) {
   let html = "";
- 
   if (movies) {
-    
     movies.forEach((movie) => {
       const { id, poster_path, title, vote_average, overview, vote_count } =
         movie;
-
       let truncOverview = "";
       if (overview.length > 50) {
         truncOverview = `${overview.slice(0, 50)}...`;
@@ -221,15 +252,11 @@ function showSearchMovies(movies) {
                </div>
                 `;
     });
-   
+
     search__list.innerHTML = html;
- 
-     
-    
   } else {
     console.log("Error");
   }
-
 }
 // function getClassByRate(vote) {
 //   if (vote >= 8) {
@@ -244,9 +271,7 @@ function showSearchMovies(movies) {
 // search movie
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
   const searchTerm = search.value;
-
   if (searchTerm && searchTerm !== "") {
     getSearchResults(SEARCH_API + searchTerm);
 
@@ -261,14 +286,20 @@ form.addEventListener("submit", (e) => {
 main.addEventListener("click", getMovieDetails);
 
 async function getMovieDetails(event) {
-  let singleMovie = event.target;
-  const resp = await fetch(
-    `https://api.themoviedb.org/3/movie/${singleMovie.dataset.id}?api_key=4cc9ae371138690468656ddee066c770&language=en-US`
-  );
-  const respData = await resp.json();
-  //   console.log(respData);
-  showSingleMovie(respData);
-  scrollTop();
+  try {
+    let singleMovie = event.target;
+    const resp = await fetch(
+      `https://api.themoviedb.org/3/movie/${singleMovie.dataset.id}?api_key=4cc9ae371138690468656ddee066c770&language=en-US`
+    );
+    ladingSpinner(false);
+    const respData = await resp.json();
+    ladingSpinner(true);
+    scrollTop();
+    showSingleMovie(respData);
+    
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 function showSingleMovie(movie) {
