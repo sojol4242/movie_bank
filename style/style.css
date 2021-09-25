@@ -95,7 +95,7 @@ body {
   padding: 1.2rem 0;
   margin: 0 auto;
   width: 90%;
-  z-index: 100;
+  
 
   /* position: relative; */
 }
@@ -151,7 +151,7 @@ body {
   color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-family: cursive;
+ 
   font-weight: 400;
 }
 .header .nav-bar .nav-button {
@@ -256,8 +256,7 @@ body {
 @media only screen and (min-width: 1000px) {
   .header {
     width: 100%;
-    position: fixed;
-    background: #14213d;
+     
   }
   .header .nav-bar {
     width: auto;
@@ -301,18 +300,20 @@ body {
     display: none;
   }
 }
+ 
 
 /* hero section */
 .hero__section {
   padding: 5rem 3rem 3rem;
   width: 100%;
-  background: linear-gradient(
-    to top,
+  
+  background-image: linear-gradient(
+    to top 80%,
     var(--primary-color),
     var(--secondary-color)
   );
   color: var(--text-color);
-
+  /* clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%); */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -345,6 +346,9 @@ body {
   text-overflow: ellipsis;
   font-weight: 500;
   margin: 0.5rem 0;
+}
+.hero__star{
+  color: #ff950b;
 }
 
 /* .app__seriesSeasons {
