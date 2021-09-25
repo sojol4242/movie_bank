@@ -101,11 +101,11 @@ function showTopRatedMovies(movies) {
                   </p>
                   <div class="hero__ratings">
                     <div class="ratings">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
                     </div>
                     <div class="rating__count">
                       <p class="rating__likes">${vote_average} <span>(${vote_count})</span></p>
@@ -170,11 +170,11 @@ function showMovies(movies) {
                   </p>
                   <div class="hero__ratings">
                     <div class="ratings">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
+                    <i class="fas fa-star hero__star"></i>
                     </div>
                     <div class="rating__count">
                       <p class="rating__likes">${vote_average} <span>(${vote_count})</span></p>
@@ -238,11 +238,11 @@ function showSearchMovies(movies) {
                   </p>
                   <div class="hero__ratings">
                     <div class="ratings">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star hero__star"></i>
+                      <i class="fas fa-star hero__star"></i>
+                      <i class="fas fa-star hero__star"></i>
+                      <i class="fas fa-star hero__star"></i>
+                      <i class="fas fa-star hero__star"></i>
                     </div>
                     <div class="rating__count">
                       <p class="rating__likes">${vote_average} <span>(${vote_count})</span></p>
@@ -308,7 +308,6 @@ function showSingleMovie(movie) {
   if (movie) {
     const {
       genres,
-
       title,
       vote_average,
       overview,
@@ -316,6 +315,12 @@ function showSingleMovie(movie) {
       release_date,
       backdrop_path,
     } = movie;
+    let rate=  Math.round(vote_average/2);
+    // rate=Array(rate).fill().map((_,i)=>{
+    //    "*"
+    // })
+   
+
 
     html += `
     <div class="hero__section">
@@ -342,14 +347,13 @@ function showSingleMovie(movie) {
    
     <div class="hero__ratings">
       <div class="ratings">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
+      <i class="fas fa-star hero__star"></i>
+      <i class="fas fa-star hero__star"></i>
+      <i class="fas fa-star hero__star"></i>
+      <i class="fas fa-star hero__star"></i>
       </div>
       <div class="rating__count">
-        <p class="rating__likes">${vote_average} <span>(${vote_count})</span></p>
+        <p class="rating__likes">${rate} <span>(${vote_count})</span></p>
       </div>
     </div>
     <button
@@ -373,6 +377,13 @@ function showSingleMovie(movie) {
     console.log("Error");
   }
 }
+
+
+// function star(){
+//   Array(rate).fill().map((_,i)=>{
+         
+//   }) 
+// }
 
 // smooth scroll after clicked on single movies
 const scrollTop = () => window["scrollTo"]({ top: 0, behavior: "smooth" });
