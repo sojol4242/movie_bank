@@ -11,9 +11,19 @@ const search__list = document.getElementById("search__list");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
 const main = document.getElementById("main");
+const hero = document.getElementById("hero__section");
 const see__more = document.querySelector(".see__more");
 const see__more__text = document.querySelector(".hero__desc");
 const search__heading = document.querySelector(".search__list");
+
+// trailer modal
+
+const video__modal = document.querySelector(".video__modal");
+// const trailer__btn=document.querySelector(".hero__button");
+
+// trailer__btn.addEventListener("click",(e)=>{
+//   console.log(e);
+// })
 
 // loading spinner
 const preloader = document.querySelector(".preloader");
@@ -21,24 +31,16 @@ function ladingSpinner(show) {
   if (show) {
     setTimeout(() => {
       preloader.style.display = "none";
-    }, 2000);
+    }, 1000);
   } else {
     preloader.style.display = "flex";
   }
 }
 ladingSpinner(true);
 
-// see more
-see__more.addEventListener("click", (e) => {
-  see__more__text.classList.toggle("see__more__text");
-  if (see__more.innerText === "See More") {
-    see__more.innerText = "See Less";
-  } else {
-    see__more.innerText = "See More";
-  }
-});
 // navbar
 const ham = document.querySelector(".header .nav-bar .ham");
+
 const nav = document.querySelector(".header .nav-bar nav");
 ham.addEventListener("click", () => {
   nav.classList.toggle("nav-toggle");
@@ -56,15 +58,14 @@ getSearchResults(SEARCH_API);
 async function getTopMovies(url) {
   try {
     const resp = await fetch(url);
- 
+
     const respData = await resp.json();
     ladingSpinner(true);
     showTopRatedMovies(respData.results);
     ladingSpinner(false);
   } catch (error) {
-   console.log("Error ",err.message);
+    console.log("Error ", err.message);
   }
- 
 }
 
 function showTopRatedMovies(movies) {
@@ -123,18 +124,15 @@ function showTopRatedMovies(movies) {
   }
 }
 async function getMovies(url) {
-  try{
+  try {
     const resp = await fetch(url);
     const respData = await resp.json();
     ladingSpinner(true);
     showMovies(respData.results);
     ladingSpinner(false);
+  } catch (error) {
+    console.log("Error ", err.message);
   }
- 
-  catch (error) {
-    console.log("Error ",err.message);
-    }
- 
 }
 function showMovies(movies) {
   let html = "";
@@ -198,10 +196,7 @@ async function getSearchResults(url) {
     showSearchMovies(respData.results);
     ladingSpinner(false);
   } catch (error) {
-   
-     
     alert("Search movie not called yet", error.message);
-     
   }
 }
 
@@ -287,24 +282,36 @@ main.addEventListener("click", getMovieDetails);
 
 async function getMovieDetails(event) {
   try {
-    let singleMovie = event.target;
+    let movie__id = event.target.dataset.id;
     const resp = await fetch(
-      `https://api.themoviedb.org/3/movie/${singleMovie.dataset.id}?api_key=4cc9ae371138690468656ddee066c770&language=en-US`
+      `https://api.themoviedb.org/3/movie/${movie__id}?api_key=${API_KEY}&language=en-US`
     );
     ladingSpinner(false);
     const respData = await resp.json();
     ladingSpinner(true);
     scrollTop();
     showSingleMovie(respData);
-    
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+async function getTrailer(event) {
+  try {
+    let movie__id = event.target.dataset.id;
+    const resp = await fetch(
+      `https://api.themoviedb.org/3/movie/${movie__id}/videos?api_key=${API_KEY}&language=en-US;
+      `
+    );
+
+    const respData = await resp.json();
+    console.log(respData);
+    // showSingleMovie(respData);
   } catch (error) {
     console.log(error.message);
   }
 }
 
 function showSingleMovie(movie) {
-  let html = "";
-
   if (movie) {
     const {
       genres,
@@ -315,15 +322,14 @@ function showSingleMovie(movie) {
       release_date,
       backdrop_path,
     } = movie;
-    let rate=  Math.round(vote_average/2);
+
+    let rate = Math.round(vote_average / 2);
     // rate=Array(rate).fill().map((_,i)=>{
     //    "*"
     // })
-   
 
-
-    html += `
-    <div class="hero__section">
+    let html = `
+     
     <div class="hero__overlay" 
     style="background-image: url(${IMG_PATH + backdrop_path})"
     ></div>
@@ -335,15 +341,17 @@ function showSingleMovie(movie) {
     <h4 class="hero__genres">${genres[0].name}&nbsp;&nbsp;|&nbsp;&nbsp;${
       genres[1].name
     }</h4>
+    
     <p class="hero__desc">
-    ${overview.slice(0, 200)}
+    ${overview.slice(0, 120)}
     <span class="dots">....</span>
-    &nbsp;
+     
     <span class="hidden__text">
-    ${overview.slice(201, overview.length)}
-    </span>
-  </p>
-  <span class="see__more"> See More</span>
+    ${overview.slice(100, overview.length)}
+    </span>  <span class="see__more"> See More</span> 
+  
+    </p>
+    
    
     <div class="hero__ratings">
       <div class="ratings">
@@ -370,32 +378,68 @@ function showSingleMovie(movie) {
       <span class="MuiButton-label">Play Trailer</span
       ><span class="MuiTouchRipple-root"></span>
     </button>
+  
+    <div class="video__modal">
+    <div class="close__modal__icon">
+  
+    </div>
+    <iframe
+      width="100%"
+      height="100%"
+      src="https://www.youtube.com/embed/"
+      
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   </div>
     `;
     hero__section.innerHTML = html;
   } else {
-    console.log("Error");
+    hero__section.innerHTML = "Something is wrong";
   }
 }
 
+// get trailer
+
+// async function getTrailer(e){
+//   const movie__id=e.target.dataset
+
+// }
 
 // function star(){
 //   Array(rate).fill().map((_,i)=>{
-         
-//   }) 
+
+//   })
 // }
 
 // smooth scroll after clicked on single movies
 const scrollTop = () => window["scrollTo"]({ top: 0, behavior: "smooth" });
 
-// read more
-// read__more__btn.addEventListener('click',readMore);
-// function readMore(event){
+// see more and play trailer
+hero.addEventListener("click", heroFunction);
 
-//   for (let i = 0; i < 10; i++) {
-//     let btn = event.target;
-//     console.log(btn);
+function heroFunction(e) {
+  const { className, tagName } = e.target;
+  if (className === "see__more") {
+    const desc = e.target.parentElement;
+    if (desc) {
+      desc.classList.toggle("see__more__text");
+      if (see__more.innerText === "See More") {
+        see__more.innerText = "See Less";
+      } else {
+        see__more.innerText = "See More";
+      }
+    }
+    see__more__text.classList.toggle("see__more__text");
+  }
 
-//   }
+  // else if (tagName.toLowerCase() === "button") {
 
-// }
+  //    const hero__section=e.target.parentElement;
+  //    let html='';
+
+  // }
+  //  movie__url=https://www.youtube.com/embed/
+}
